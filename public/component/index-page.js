@@ -1,30 +1,10 @@
 import m from 'mithril' 
 import http from '../service/http'
 import Alert from './alert'
+import DbList from './db-list'
 
 function controller() {
-
 	var self = this
-	self.databases = m.prop([])
-
-	/* list databases */
-	self.listDatabases = function () {
-		http.post("/database/list", {}).then(function (r) {
-			
-			if(r.code == 404) {
-				return alert(r.message)
-			}
-
-			self.databases = m.prop(r.payload) 
-		})
-	}
-
-	self.useDb = function (r) {
-		m.route("/db/" + r.Database)
-	}
-
-	self.listDatabases()
-
 }
 
 function view (ctrl) {
@@ -32,19 +12,11 @@ function view (ctrl) {
     return (
     	<div>
 
-    		<Alert message="Databases listed below"/>
-    		
-    		<table class="w3-table w3-striped w3-bordered w3-hoverable w3-card-12">
-    			<tbody>
-    				{
-    					ctrl.databases().map(function (r) {
-    						return <tr onclick={ctrl.useDb.bind(this, r)}>
-    							<td>{r.Database}</td>
-							</tr>
-    					})
-    				}
-    			</tbody>
-    		</table>
+    		<div class="w3-margin-top">
+    				
+    			Choose database from left side
+
+    		</div>
 
     	</div>
     );

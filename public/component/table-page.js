@@ -9,7 +9,7 @@ function controller() {
 	self.dbname = m.route.param().dbname
 	self.tablename = m.route.param().tablename
 	self.page = m.route.param().page || 1
-    self.browseMessage = "Rows in '" + self.tablename + "' listed below"
+    self.browseMessage = "Rows in '" + self.tablename + "' table listed below"
 
     self.limit = 10
     self.rows = m.prop([])
@@ -81,9 +81,7 @@ function view (ctrl) {
     return (
     	<div>
 
-    		<hr></hr>
-
-    		<ul class="w3-navbar w3-border w3-light-grey">
+    		<ul class="w3-navbar w3-border w3-light-grey w3-margin-top">
 				<li><a href="javascript:void(0)" onclick={ctrl.openTab.bind(ctrl, 'Browse')}>Browse</a></li>
 				<li><a href="javascript:void(0)" onclick={ctrl.openTab.bind(ctrl, 'Columns')}>Columns</a></li>
 			</ul>
@@ -97,7 +95,7 @@ function view (ctrl) {
 					<li><a href="javascript:void(0)" onclick={ctrl.goForward.bind(ctrl)}>&#10095;</a></li>
 				</ul>
 				
-				<table class="w3-table w3-striped w3-bordered w3-hoverable w3-card-12">
+				<table class="w3-table-all">
 	    			 
 	                <thead>
 	                	<tr>

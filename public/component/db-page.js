@@ -26,7 +26,6 @@ function controller() {
     }
 
 	self.listTables()
-
 }
 
 function view (ctrl) {
@@ -36,7 +35,7 @@ function view (ctrl) {
 
             <Alert message={ctrl.message}/>
     		
-    		<table class="w3-table w3-striped w3-bordered w3-hoverable w3-card-12">
+    		<table class="w3-table-all w3-hoverable">
     			 
                 <thead>
                     <tr>
@@ -52,7 +51,7 @@ function view (ctrl) {
     						return <tr>
     							<td onclick={ctrl.useTable.bind(this, r)}>{r}</td>
                                 <td>
-                                    empty | drop
+                                    <span class="w3-text-teal pointer">empty</span> | <span class="w3-text-red pointer">drop</span>
                                 </td>
 							</tr>
     					})
@@ -60,6 +59,17 @@ function view (ctrl) {
 
     			</tbody>
     		</table>
+
+
+            <div class="w3-panel w3-padding-8 w3-border">
+                <h4>Operations</h4>
+                <ul>
+                    <li class="pointer">
+                        <i class="fa fa-remove w3-text-red"></i> Delete this database
+                    </li>
+                </ul>
+            </div> 
+
 
     	</div>
     );
