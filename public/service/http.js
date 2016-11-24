@@ -1,13 +1,10 @@
 import m from 'mithril'
-import auth from './auth'
 
 function req(url, data, type) {
 
 	if(!data) {
 		data = {}
 	}
-
-	data["token"] = auth.isLogged()
 
 	return m.request({
 		method: type,

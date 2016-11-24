@@ -11,7 +11,7 @@ app.get("*", function (req, res) {
 	res.sendFile(__dirname + "/public/index.html")
 })
 
-app.use("/user", require("./routes/user"))
+app.use("/database", require("./routes/database"))
 
 app.listen(2222)
 

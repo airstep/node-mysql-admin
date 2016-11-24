@@ -38,8 +38,6 @@ textarea:focus, input:focus{
     outline: none;
 }
 
-
-
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -58,3 +56,6 @@ tr:nth-child(even) {
 .pointer {cursor: pointer;}
 .fl {float: left;}
 .fr {float: right;}
+
+
+.menu {height: 40px; line-height: 40px; background-color: #CCC;}

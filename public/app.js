@@ -1,9 +1,6 @@
 import m from 'mithril'
 import Header from './component/header'
-import Index from './component/index'
-import Login from './component/login'
-import Register from './component/register'
-import Exit from './component/exit'
+import IndexPage from './component/index-page'
 
 window.onload = function () {
 
@@ -13,10 +10,7 @@ window.onload = function () {
 	// routes
     m.route.mode = "hash"
 	m.route(document.querySelector("routes"), "/", {
-    	"/": Index,
-    	"/login": Login,
-    	"/register": Register,
-    	"/exit": Exit
+    	"/": IndexPage
 	})
 
 	
