@@ -14,9 +14,8 @@ window.onload = function () {
 	m.route(document.querySelector("routes"), "/", {
     	"/": IndexPage,
     	"/db/:dbname": DbPage,
-    	"/db/:dbname/:tablename": TablePage
-
+    	"/db/:dbname/:tablename": TablePage,
+    	"/db/:dbname/:tablename/:page": TablePage
 	})
-
 	
 }

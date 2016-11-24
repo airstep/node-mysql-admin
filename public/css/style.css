@@ -56,5 +56,6 @@ tr:nth-child(even) {
 .pointer {cursor: pointer;}
 .fl {float: left;}
 .fr {float: right;}
+.hide {display: none;}
 
 

@@ -27,8 +27,6 @@ function controller() {
 
 	self.listTables()
 
-
-
 }
 
 function view (ctrl) {

@@ -59,3 +59,40 @@ exports.columnlist = function (req, res) {
 	
 }
 
+exports.rows = function (req, res) {
+
+	var dbname = req.body.dbname
+	var tablename = req.body.tablename
+	var limit = req.body.limit
+	var offset = req.body.offset
+
+	if(!dbname) {
+		return util.err(res, "Database not selected")
+	}
+
+	if(!tablename) {
+		return util.err(res, "Table not selected")
+	}
+
+	if(!limit) {
+		limit = 10
+	}
+
+	if(offset == null || offset == undefined) {
+		offset = 0
+	}
+
+	var sql = "SELECT * FROM " + dbname +"."+ tablename + " LIMIT " + limit + " OFFSET " + offset
+	
+
+	mysql.query(sql, [], function (err, result) {
+
+		if(err) {
+			return util.err(res, "Database error")
+		}
+
+		util.ok(res, "OK", result)
+
+	})
+	
+}
