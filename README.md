@@ -1,3 +1,11 @@
 **Nodejs MySql Admin**
 
-MySql database viewer/editor for nodejs.
+MySql database viewer/editor written in nodejs. It's in development phase.
+
+To use it, run:
+
+	npm install
+
+And then
+
+	gulp
