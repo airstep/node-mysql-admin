@@ -1,1 +1,3 @@
-node-mysql-admin
+**Nodejs MySql Admin**
+
+MySql database viewer/editor for nodejs.
