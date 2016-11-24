@@ -23,6 +23,9 @@ function controller() {
 			}
 
 			self.columns = m.prop(r.payload) 
+
+			//after columns
+			self.listRows(self.page)
 		})
 	}
 
@@ -71,8 +74,6 @@ function controller() {
 
 	self.openTab("Browse")
 	self.listColumns()
-	self.listRows(self.page)
-
 }
 
 function view (ctrl) {

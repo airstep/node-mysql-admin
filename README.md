@@ -9,3 +9,11 @@ To use it, run:
 And then
 
 	gulp
+
+**TODO**
+	
+	- Create database
+	- Create table
+	- Insert row
+	- Empty/drop/edit operations
+	- Sql execution
