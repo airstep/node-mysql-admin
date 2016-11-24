@@ -63,7 +63,7 @@ function view (ctrl) {
 
             <div class="w3-panel w3-padding-8 w3-border">
                 <h4>Operations</h4>
-                <ul>
+                <ul class="w3-ul">
                     <li class="pointer">
                         <i class="fa fa-remove w3-text-red"></i> Delete this database
                     </li>
