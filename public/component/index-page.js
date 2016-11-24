@@ -1,5 +1,6 @@
 import m from 'mithril' 
 import http from '../service/http'
+import Alert from './alert'
 
 function controller() {
 
@@ -18,14 +19,33 @@ function controller() {
 		})
 	}
 
+	self.useDb = function (r) {
+		m.route("/db/" + r.Database)
+	}
+
 	self.listDatabases()
 
 }
 
 function view (ctrl) {
+
     return (
     	<div>
-    		Index
+
+    		<Alert message="Databases listed below"/>
+    		
+    		<table class="w3-table w3-striped w3-bordered w3-hoverable w3-card-12">
+    			<tbody>
+    				{
+    					ctrl.databases().map(function (r) {
+    						return <tr onclick={ctrl.useDb.bind(this, r)}>
+    							<td>{r.Database}</td>
+							</tr>
+    					})
+    				}
+    			</tbody>
+    		</table>
+
     	</div>
     );
 }

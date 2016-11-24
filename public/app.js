@@ -1,6 +1,8 @@
 import m from 'mithril'
 import Header from './component/header'
 import IndexPage from './component/index-page'
+import DbPage from './component/db-page'
+import TablePage from './component/table-page'
 
 window.onload = function () {
 
@@ -10,7 +12,10 @@ window.onload = function () {
 	// routes
     m.route.mode = "hash"
 	m.route(document.querySelector("routes"), "/", {
-    	"/": IndexPage
+    	"/": IndexPage,
+    	"/db/:dbname": DbPage,
+    	"/db/:dbname/:tablename": TablePage
+
 	})
 
 	

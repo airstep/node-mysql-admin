@@ -12,6 +12,7 @@ app.get("*", function (req, res) {
 })
 
 app.use("/database", require("./routes/database"))
+app.use("/table", require("./routes/table"))
 
 app.listen(2222)
 

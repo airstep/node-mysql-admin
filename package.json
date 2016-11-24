@@ -16,6 +16,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-nodemon": "^2.2.1",
     "gulp-sourcemaps": "^2.2.0",
+    "lodash": "^4.17.2",
     "mithril": "^0.2.5",
     "msx": "^0.4.1",
     "mysql": "^2.11.1",

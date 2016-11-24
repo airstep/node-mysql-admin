@@ -12,6 +12,5 @@ exports.list = function (req, res) {
 		util.ok(res, "OK", result)
 
 	})
-
 	
 }
