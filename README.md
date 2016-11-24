@@ -17,3 +17,4 @@ And then
 	- Insert row
 	- Empty/drop/edit operations
 	- Sql execution
+	- Better pagination
