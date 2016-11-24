@@ -2,7 +2,7 @@
 
 MySql database viewer/editor written in nodejs. It's in development phase.
 
-To use it, run:
+To use it change password in *mysql.js* to your MySql password, run:
 
 	npm install
 
