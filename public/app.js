@@ -7,11 +7,7 @@ import DbList from './component/db-list'
 
 window.onload = function () {
 
-    // header
-    m.render(document.querySelector("header"), <Header/>)
-
-    // db list component
-    m.module(document.querySelector("dblist"), <DbList/>)
+    
 
 	// routes
     m.route.mode = "hash"
@@ -21,5 +17,12 @@ window.onload = function () {
     	"/db/:dbname/:tablename": TablePage,
     	"/db/:dbname/:tablename/:page": TablePage
 	})
+
+    // db list component
+    // render after route staff
+    m.module(document.querySelector("dblist"), <DbList/>)
+
+    // header
+    m.module(document.querySelector("header"), <Header/>)
 	
 }

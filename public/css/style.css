@@ -1,22 +1,5 @@
 html {min-height:100%; position: relative;}
 body {font-family: Arial; font-size: 14px; line-height: 23px;}
-
-.t:after {
-     visibility: hidden;
-     display: block;
-     font-size: 0;
-     content: " ";
-     clear: both;
-     height: 0;
-     }
-.t { display: inline-block; }
-* html .t { height: 1%; }
-.t { display: block; }
-
-*:focus {
-    outline: none
-}
-
 .pointer {cursor: pointer;}
 .fl {float: left;}
 .fr {float: right;}

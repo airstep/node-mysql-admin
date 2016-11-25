@@ -7,6 +7,7 @@ function controller() {
 
 	var self = this
 	self.databases = m.prop([])
+	
 
 	/* list databases */
 	self.listDatabases = function () {
@@ -24,6 +25,11 @@ function controller() {
 
 	self.useDb = function (r) {
 		m.route("/db/" + r.Database)
+		self.selectedDb()
+	}
+
+	self.selectedDb = function () {
+		self.selectedDbname = m.route.param().dbname
 	}
 
 	// reload db list with this event
@@ -31,10 +37,13 @@ function controller() {
 	pubsub.on("db-list:reload", self.listDatabases)
 
 	self.listDatabases()
+	self.selectedDb()
 
 }
 
 function view (ctrl) {
+
+
 
     return (
     	<div>
@@ -45,7 +54,9 @@ function view (ctrl) {
     			<tbody>
     				{
     					ctrl.databases().map(function (r) {
-    						return <tr onclick={ctrl.useDb.bind(this, r)} class="pointer">
+    						return <tr 
+    						onclick={ctrl.useDb.bind(this, r)} 
+    						class={"pointer " + (r.Database == ctrl.selectedDbname ? "w3-green" : "")} >
     							<td>{r.Database}</td>
 							</tr>
     					})
