@@ -1,7 +1,9 @@
 html {min-height:100%; position: relative;}
-body {font-family: Arial; font-size: 14px; line-height: 23px;}
+body {font-family: Arial; font-size: 14px; line-height: 23px;padding-left:250px;}
 .pointer {cursor: pointer;}
 .fl {float: left;}
 .fr {float: right;}
 .hide {display: none;}
-.nowrap {white-space: nowrap; overflow: hidden;}
+.nowrap {white-space: nowrap; overflow-y:  scroll;text-overflow: ellipsis; }
+.db-list{position:fixed;height:100%;width:250px; top:0;left:0;padding: 2px;}
+.content{}

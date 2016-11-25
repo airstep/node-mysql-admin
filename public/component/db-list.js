@@ -46,10 +46,10 @@ function controller() {
 function view (ctrl) {
 
     return (
-    	<div class="nowrap">
+    	<div class="nowrap db-list">
 
-    		<Alert message="Databases listed below"/>
-    		
+    		<Alert message="Node-mysql-admin" />
+
     		<table class="w3-table-all w3-hoverable">
     			<tbody>
     				{

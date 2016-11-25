@@ -112,6 +112,7 @@ function view (ctrl) {
     		<ul class="w3-navbar w3-border w3-light-grey w3-margin-top">
 				<li><a href="javascript:void(0)" onclick={ctrl.openTab.bind(ctrl, 'Browse')}>Browse</a></li>
 				<li><a href="javascript:void(0)" onclick={ctrl.openTab.bind(ctrl, 'Columns')}>Columns</a></li>
+				<li><a href="javascript:void(0)" onclick={ctrl.openTab.bind(ctrl, 'Sql')}>SQL</a></li>
 			</ul>
 
 			<div class="tab" class={ctrl.isOpened("Browse")}>
@@ -185,6 +186,26 @@ function view (ctrl) {
 	    		</table>
 
 			</div>
+
+			<div class="tab" class={ctrl.isOpened("Sql")}>
+
+				<div class="w3-margin-top"></div>
+
+				<textarea 
+				class="w3-input w3-border"
+				placeholder="Sql command"
+				></textarea>
+
+				<div class="w3-margin-top">
+
+					<span class="w3-btn w3-green fl">Run</span>
+					<span class="w3-btn w3-red fr">Clear</span>
+
+				</div>
+				
+
+			</div>
+
     	</div>
     );
 }
