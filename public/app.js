@@ -9,6 +9,8 @@ window.onload = function () {
 
     // header
     m.render(document.querySelector("header"), <Header/>)
+
+    // db list component
     m.module(document.querySelector("dblist"), <DbList/>)
 
 	// routes

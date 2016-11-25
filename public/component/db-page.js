@@ -49,7 +49,9 @@ function view (ctrl) {
     				{
     					ctrl.tables().map(function (r) {
     						return <tr>
-    							<td onclick={ctrl.useTable.bind(this, r)}>{r}</td>
+    							<td 
+                                onclick={ctrl.useTable.bind(this, r)} 
+                                class="pointer">{r}</td>
                                 <td>
                                     <span class="w3-text-teal pointer">empty</span> | <span class="w3-text-red pointer">drop</span>
                                 </td>
@@ -63,11 +65,13 @@ function view (ctrl) {
 
             <div class="w3-panel w3-padding-8 w3-border">
                 <h4>Operations</h4>
+
                 <ul class="w3-ul">
-                    <li class="pointer">
+                    <li class="pointer" style="margin-left:-16px;">
                         <i class="fa fa-remove w3-text-red"></i> Delete this database
                     </li>
                 </ul>
+
             </div> 
 
 

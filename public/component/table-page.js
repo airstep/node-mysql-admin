@@ -1,6 +1,8 @@
 import m from 'mithril' 
 import http from '../service/http'
 import Alert from './alert'
+import TableRow from './table-row'
+
 
 function controller() {
 
@@ -40,7 +42,28 @@ function controller() {
 				return alert(r.message)
 			}
 
-			self.rows = m.prop(r.payload) 
+			for (var j = 0; j < r.payload.length; j++) {
+				
+				var row = r.payload[j]
+
+				// map row data to this obj using m.prop()
+				var tempRowData = {}
+					
+
+				for (var i = 0; i < self.columns().length; i++) {
+					
+					var column = self.columns()[i]
+
+					tempRowData[column.Field] = {}
+
+					tempRowData[column.Field]["_isEditing"] = false
+					tempRowData[column.Field]["data"] = m.prop(row[column.Field])
+				}
+
+				self.rows().push(tempRowData)
+
+			}
+
 		})
 	}
 
@@ -70,6 +93,15 @@ function controller() {
 		} else {
 			return "hide"
 		}
+	}
+
+	self.onrowdblclick = function (row, field) {
+
+		// set edit mode true to show input
+		row._isEditing = true
+		console.log("onrowdblclick", row, field)
+
+		m.redraw()
 	}
 
 	self.openTab("Browse")
@@ -114,7 +146,7 @@ function view (ctrl) {
 	    						return <tr> 
 	    						{
 	    							ctrl.columns().map(function (column) {
-	    								return <td>{row[column.Field]}</td>
+	    								return <TableRow row={row} column={column}/>
 	    							})
 								}
 								</tr>
@@ -129,7 +161,7 @@ function view (ctrl) {
 
 			<div class="tab" class={ctrl.isOpened("Columns")}>
     		
-	    		<table class="w3-table w3-striped w3-bordered w3-hoverable w3-card-12">
+	    		<table class="w3-table-all w3-margin-top">
 	    			 
 	                <thead>
 	                    <tr>

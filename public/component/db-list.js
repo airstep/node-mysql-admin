@@ -40,7 +40,7 @@ function view (ctrl) {
     			<tbody>
     				{
     					ctrl.databases().map(function (r) {
-    						return <tr onclick={ctrl.useDb.bind(this, r)}>
+    						return <tr onclick={ctrl.useDb.bind(this, r)} class="pointer">
     							<td>{r.Database}</td>
 							</tr>
     					})

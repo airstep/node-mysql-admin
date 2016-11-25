@@ -11,13 +11,9 @@ function view (ctrl) {
 
     return (
     	<div>
-
     		<div class="w3-margin-top">
-    				
     			Choose database from left side
-
     		</div>
-
     	</div>
     );
 }
