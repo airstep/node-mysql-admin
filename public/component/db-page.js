@@ -1,5 +1,6 @@
 import m from 'mithril' 
 import http from '../service/http'
+import pubsub from '../service/pubsub'
 import Alert from './alert'
 
 function controller() {
@@ -21,8 +22,58 @@ function controller() {
 		})
 	}
 
-    self.useTable = function (r) {
-        m.route("/db/" + self.dbname + "/" + r)
+    self.useTable = function (tablename) {
+        m.route("/db/" + self.dbname + "/" + tablename)
+    }
+
+    self.dropDatabase = function () {
+
+        if(!confirm("Delete database named '" + self.dbname + "'"))
+            return
+        
+        http.post("/database/drop", {dbname: self.dbname}).then(function (r) {
+            
+            if(r.code == 404) {
+                return alert(r.message)
+            }
+
+
+            m.route("/")
+            pubsub.emit("db-list:reload")
+
+        })
+    }
+
+     self.dropTable = function (tablename) {
+
+        if(!confirm("Delete table named '" + tablename + "'"))
+            return
+        
+        http.post("/table/drop", {dbname: self.dbname, tablename: tablename}).then(function (r) {
+            
+            if(r.code == 404) {
+                return alert(r.message)
+            }
+
+            self.listTables()
+             
+        })
+    }
+
+    self.emptyTable = function (tablename) {
+
+        if(!confirm("Empty table named '" + tablename + "'"))
+            return
+        
+        http.post("/table/empty", {dbname: self.dbname, tablename: tablename}).then(function (r) {
+            
+            if(r.code == 404) {
+                return alert(r.message)
+            }
+
+            self.listTables()
+             
+        })
     }
 
 	self.listTables()
@@ -47,13 +98,21 @@ function view (ctrl) {
                 <tbody>
     				
     				{
-    					ctrl.tables().map(function (r) {
+    					ctrl.tables().map(function (tablename) {
     						return <tr>
     							<td 
-                                onclick={ctrl.useTable.bind(this, r)} 
-                                class="pointer">{r}</td>
+                                onclick={ctrl.useTable.bind(ctrl, tablename)} 
+                                class="pointer">{tablename}</td>
                                 <td>
-                                    <span class="w3-text-teal pointer">empty</span> | <span class="w3-text-red pointer">drop</span>
+                                    <span 
+                                    class="w3-text-teal pointer"
+                                    onclick={ctrl.emptyTable.bind(ctrl, tablename)}
+                                    > empty</span> | <span 
+                                    class="w3-text-red pointer"
+                                    onclick={ctrl.dropTable.bind(ctrl, tablename)}
+                                    >
+                                    drop
+                                    </span>
                                 </td>
 							</tr>
     					})
@@ -67,7 +126,11 @@ function view (ctrl) {
                 <h4>Operations</h4>
 
                 <ul class="w3-ul">
-                    <li class="pointer" style="margin-left:-16px;">
+                    <li 
+                    class="pointer" 
+                    style="margin-left:-16px;"
+                    onclick={ctrl.dropDatabase.bind(ctrl)}
+                    >
                         <i class="fa fa-remove w3-text-red"></i> Delete this database
                     </li>
                 </ul>

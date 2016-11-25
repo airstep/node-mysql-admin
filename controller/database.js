@@ -3,7 +3,23 @@ var mysql = require("../mysql")
 
 exports.list = function (req, res) {
 
-	mysql.query("SHOW DATABASES", [], function (err, result) {
+	var sql = "SHOW DATABASES"
+	mysql.query(sql, [], function (err, result) {
+		
+		if(err) {
+			return util.err(res, "Database error")
+		}
+
+		util.ok(res, "OK", result)
+
+	})
+	
+}
+
+exports.drop = function (req, res) {
+
+	var sql = "DROP DATABASE " + req.body.dbname
+	mysql.query(sql, [], function (err, result) {
 		
 		if(err) {
 			return util.err(res, "Database error")

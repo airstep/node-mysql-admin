@@ -99,9 +99,6 @@ function controller() {
 
 		// set edit mode true to show input
 		row._isEditing = true
-		console.log("onrowdblclick", row, field)
-
-		m.redraw()
 	}
 
 	self.openTab("Browse")

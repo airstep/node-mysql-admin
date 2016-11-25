@@ -96,3 +96,34 @@ exports.rows = function (req, res) {
 	})
 	
 }
+
+exports.drop = function (req, res) {
+
+	var sql = "DROP TABLE " + req.body.dbname + "." + req.body.tablename
+	mysql.query(sql, [], function (err, result) {
+		
+		if(err) {
+			return util.err(res, "Database error")
+		}
+
+		util.ok(res, "OK", result)
+
+	})
+	
+}
+
+
+exports.empty = function (req, res) {
+
+	var sql = "TRUNCATE " + req.body.dbname + "." + req.body.tablename
+	mysql.query(sql, [], function (err, result) {
+		
+		if(err) {
+			return util.err(res, "Database error")
+		}
+
+		util.ok(res, "OK", result)
+
+	})
+	
+}
