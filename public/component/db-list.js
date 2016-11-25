@@ -2,15 +2,18 @@ import m from 'mithril'
 import http from '../service/http'
 import pubsub from '../service/pubsub'
 import Alert from './alert'
+import DbListRow from './db-list-row'
 
 function controller() {
 
 	var self = this
 	self.databases = m.prop([])
-	
+	self.selectedDbname = null
 
 	/* list databases */
 	self.listDatabases = function () {
+
+		console.log("dblist", "listDatabases")
 
 		http.post("/database/list", {}).then(function (r) {
 
@@ -19,7 +22,6 @@ function controller() {
 			}
 
 			self.databases = m.prop(r.payload) 
-
 		})
 	}
 
@@ -43,22 +45,21 @@ function controller() {
 
 function view (ctrl) {
 
-
-
     return (
-    	<div>
+    	<div class="nowrap">
 
     		<Alert message="Databases listed below"/>
     		
     		<table class="w3-table-all w3-hoverable">
     			<tbody>
     				{
-    					ctrl.databases().map(function (r) {
-    						return <tr 
-    						onclick={ctrl.useDb.bind(this, r)} 
-    						class={"pointer " + (r.Database == ctrl.selectedDbname ? "w3-green" : "")} >
-    							<td>{r.Database}</td>
-							</tr>
+    					ctrl.databases().map(function (database) {
+    						return <DbListRow 
+    						key={database.Database}
+    						database={database} 
+    						selectedDbname={ctrl.selectedDbname} 
+    						parentCtrl={ctrl}
+    						/>
     					})
     				}
     			</tbody>

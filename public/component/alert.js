@@ -11,7 +11,7 @@ function view (ctrl) {
     return (
     	<div>
     		
-    		<div class="w3-panel w3-pale-yellow w3-border w3-border-yellow">
+    		<div class="w3-panel w3-pale-green w3-border w3-border-green">
 				<p>{ctrl.message}</p>
 			</div>
 

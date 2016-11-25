@@ -61,7 +61,6 @@ function controller() {
 				}
 
 				self.rows().push(tempRowData)
-
 			}
 
 		})
