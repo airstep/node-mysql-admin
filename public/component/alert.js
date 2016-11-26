@@ -1,23 +1,14 @@
 import m from 'mithril' 
+import Component from './component'
 
-function controller(attrs) {
+export default class Alert extends Component {
 
-	var self = this
-	self.message = attrs.message
-}
-
-function view (ctrl) {
-
-    return (
-    	<div>
-    		
+    view () {
+        return (
     		<div class="w3-panel w3-pale-green w3-border w3-border-green">
-				<p>{ctrl.message}</p>
+				<p>{this.props.message}</p>
 			</div>
+        );
+    }
 
-    	</div>
-    );
 }
-
-export default { view, controller }
-

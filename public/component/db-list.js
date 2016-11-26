@@ -2,18 +2,31 @@ import m from 'mithril'
 import http from '../service/http'
 import pubsub from '../service/pubsub'
 import Alert from './alert'
+import Component from './component'
 import DbListRow from './db-list-row'
 
-function controller() {
 
-	var self = this
-	self.databases = m.prop([])
-	self.selectedDbname = null
+export default class DbList extends Component {
+	init() {
 
-	/* list databases */
-	self.listDatabases = function () {
+		var self = this
+		self.databases = m.prop([])
+		self.selectedDbname = null
 
-		console.log("dblist", "listDatabases")
+		// reload db list with this event
+		// this event triggered from db-page component in dropDatabase() function
+		pubsub.on("db-list:reload", function () {
+			// body...
+			self.listDatabases()
+		})
+
+		self.listDatabases()
+		self.selectedDb()
+	}
+
+	listDatabases () {
+
+		var self = this
 
 		http.post("/database/list", {}).then(function (r) {
 
@@ -25,49 +38,42 @@ function controller() {
 		})
 	}
 
-	self.useDb = function (r) {
-		m.route("/db/" + r.Database)
-		self.selectedDb()
+	useDb (database) {
+		m.route("/db/" + database.Database)
+		this.selectedDb()
 	}
 
-	self.selectedDb = function () {
-		self.selectedDbname = m.route.param().dbname
+	selectedDb () {
+		this.selectedDbname = m.route.param().dbname
 	}
 
-	// reload db list with this event
-	// this event triggered from db-page component in dropDatabase() function
-	pubsub.on("db-list:reload", self.listDatabases)
+	view() {
 
-	self.listDatabases()
-	self.selectedDb()
+		var self = this
 
+		return (
+	    	<div class="nowrap db-list">
+
+	    		{Alert.component({message: "Databases listed below"})}
+
+	    		<table class="w3-table-all w3-hoverable">
+	    			<tbody>
+	    				{
+	    					self.databases().map(function (database) {
+	    						return DbListRow.component({
+	    							key: database, 
+		    						database: database,
+		    						selectedDbname: self.selectedDbname,
+		    						parentCtrl: self
+	    						})
+	    					})
+	    				}
+	    			</tbody>
+	    		</table>
+
+	    	</div>
+	    );
+	}
 }
 
-function view (ctrl) {
-
-    return (
-    	<div class="nowrap db-list">
-
-    		<Alert message="Node-mysql-admin" />
-
-    		<table class="w3-table-all w3-hoverable">
-    			<tbody>
-    				{
-    					ctrl.databases().map(function (database) {
-    						return <DbListRow 
-    						key={database.Database}
-    						database={database} 
-    						selectedDbname={ctrl.selectedDbname} 
-    						parentCtrl={ctrl}
-    						/>
-    					})
-    				}
-    			</tbody>
-    		</table>
-
-    	</div>
-    );
-}
-
-export default { view, controller }
 

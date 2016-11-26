@@ -1,25 +1,45 @@
 import m from 'mithril' 
 import http from '../service/http'
 import pubsub from '../service/pubsub'
-import Alert from './alert'
+import Component from './component'
 
-function controller(attrs) {
+export default class DbListRow extends Component {
 
-	var self = this
-	self.tables = m.prop([])
-	self.selectedDbname = attrs.selectedDbname
-	self.database = attrs.database
-	self.parentCtrl = attrs.parentCtrl
+	init() {
+		var self = this
+		self.tables = m.prop([])
+		self.selectedDbname = this.props.selectedDbname
+		self.database = this.props.database
+		self.parentCtrl = this.props.parentCtrl
 
-	self.selectedTablename = null
-	self.counter = 0
+		self.selectedTablename = null
+		self.counter = 0
 
-	/* list tables in dbname */
-	self.listTablesInDbname = function () {
+		//if this db is selected, show table list
+		if(self.selectedDbname == self.database.Database) {
+			self.listTablesInDbname()
+		}
+	}
+
+	useTable (tablename) {
+		var self = this
+		m.route("/db/" + self.selectedDbname + "/" + tablename)
+	}
+
+	selectedTable () {
+		var self = this
+		self.selectedTablename = m.route.param().tablename
+
+		if(!self.selectedTablename) {
+			return
+		}
+	}
+
+	listTablesInDbname () {
+
+		var self = this
 
 		self.counter = self.counter + 1
-
-		console.log("db-list-row redrawing", self.counter)
 
 		if(!self.selectedDbname) {
 			return
@@ -36,56 +56,36 @@ function controller(attrs) {
 		})
 	}
 
-	self.selectedTable = function () {
-		self.selectedTablename = m.route.param().tablename
+	view() {
 
-		if(!self.selectedTablename) {
-			return
-		}
+		var self = this
+
+		return (
+	    	<tr 
+			class={"pointer " + (this.database.Database == this.selectedDbname ? "w3-pale-yellow" : "")} 
+			>
+				<td>
+
+					<div
+						onclick={this.parentCtrl.useDb.bind(this.parentCtrl, this.database)} 
+					>
+						{this.database.Database}
+					</div>
+
+					<div class="w3-padding-left">
+						{
+							this.tables().map(function (tablename) {
+								return <div 
+								onclick={self.useTable.bind(self, tablename)}
+								style="padding:3px;"
+								class={(tablename == self.selectedTablename ? "w3-border" : "")} 
+								> {tablename} 
+								</div>
+							})
+						}
+					</div>
+				</td>
+			</tr>
+	    );
 	}
-
-	//if this db is selected, show table list
-	if(self.selectedDbname == self.database.Database) {
-		self.listTablesInDbname()
-	}
-
-	self.useTable = function (tablename) {
-		 m.route("/db/" + self.selectedDbname + "/" + tablename)
-	}
-
 }
-
-function view (ctrl) {
-
-    return (
-    	<tr 
-		class={"pointer " + (ctrl.database.Database == ctrl.selectedDbname ? "w3-pale-yellow" : "")} 
-		
-		>
-			<td>
-
-				<div
-					onclick={ctrl.parentCtrl.useDb.bind(ctrl, ctrl.database)} 
-				>
-					{ctrl.database.Database}
-				</div>
-
-				<div class="w3-padding-left">
-					{
-						ctrl.tables().map(function (tablename) {
-							return <div 
-							onclick={ctrl.useTable.bind(ctrl, tablename)}
-							style="padding:3px;"
-							class={(" ") + (tablename == ctrl.selectedTablename ? "w3-border" : "")} 
-							> {tablename} 
-							</div>
-						})
-					}
-				</div>
-			</td>
-		</tr>
-    );
-}
-
-export default { view, controller }
-
