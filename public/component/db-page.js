@@ -19,7 +19,8 @@ export default class DbPage extends Component {
         http.post("/table/list", {dbname: self.dbname}).then(function (r) {
             
             if(r.code == 404) {
-                return alert(r.message)
+                pubsub.emit("error:show", r.message)
+                return
             }
 
             self.tables = m.prop(r.payload) 
@@ -38,7 +39,7 @@ export default class DbPage extends Component {
         http.post("/database/drop", {dbname: this.dbname}).then(function (r) {
             
             if(r.code == 404) {
-                return alert(r.message)
+                return pubsub.emit("error:show", r.message)
             }
 
 
@@ -58,7 +59,7 @@ export default class DbPage extends Component {
         http.post("/table/drop", {dbname: self.dbname, tablename: tablename}).then(function (r) {
             
             if(r.code == 404) {
-                return alert(r.message)
+                return pubsub.emit("error:show", r.message)
             }
 
             self.listTables()
@@ -76,7 +77,7 @@ export default class DbPage extends Component {
         http.post("/table/empty", {dbname: self.dbname, tablename: tablename}).then(function (r) {
             
             if(r.code == 404) {
-                return alert(r.message)
+                return pubsub.emit("error:show", r.message)
             }
 
             self.listTables()

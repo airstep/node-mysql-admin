@@ -3,6 +3,7 @@ import http from '../service/http'
 import Alert from './alert'
 import TableBrowseRow from './table-browse-row'
 import Component from './component'
+import pubsub from '../service/pubsub'
 
 export default class TablePage extends Component {
 
@@ -28,7 +29,7 @@ export default class TablePage extends Component {
 		http.post("/table/column/list", {dbname: self.dbname, tablename: self.tablename}).then(function (r) {
 			
 			if(r.code == 404) {
-				return alert(r.message)
+				return pubsub.emit("error:show", r.message)
 			}
 
 			self.columns = m.prop(r.payload) 
@@ -48,7 +49,7 @@ export default class TablePage extends Component {
 		}).then(function (r) {
 			
 			if(r.code == 404) {
-				return alert(r.message)
+				return pubsub.emit("error:show", r.message)
 			}
 
 			for (var j = 0; j < r.payload.length; j++) {

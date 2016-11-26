@@ -38,7 +38,6 @@ export default class TablePageBrowseRow extends Component {
 			ondblclick={self.onrowdblclick.bind(self, self.row, self.column)}
 			>
 	    		{toShow}
-	    		
 	    	</td>
 	    );
 	}

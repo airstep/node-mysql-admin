@@ -48,7 +48,7 @@ export default class DbListRow extends Component {
 		http.post("/table/list", {dbname: self.selectedDbname}).then(function (r) {
 			
 			if(r.code == 404) {
-				return alert(r.message)
+				return pubsub.emit("error:show", r.message)
 			}
 
 			self.tables = m.prop(r.payload) 

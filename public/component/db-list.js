@@ -16,7 +16,6 @@ export default class DbList extends Component {
 		// reload db list with this event
 		// this event triggered from db-page component in dropDatabase() function
 		pubsub.on("db-list:reload", function () {
-			// body...
 			self.listDatabases()
 		})
 
@@ -31,7 +30,7 @@ export default class DbList extends Component {
 		http.post("/database/list", {}).then(function (r) {
 
 			if(r.code == 404) {
-				return alert(r.message)
+				return pubsub.emit("error:show", r.message)
 			}
 
 			self.databases = m.prop(r.payload) 

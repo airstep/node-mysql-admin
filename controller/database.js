@@ -7,7 +7,7 @@ exports.list = function (req, res) {
 	mysql.query(sql, [], function (err, result) {
 		
 		if(err) {
-			return util.err(res, "Database error")
+			return util.err(res, err.toString(), err)
 		}
 
 		util.ok(res, "OK", result)
@@ -22,7 +22,7 @@ exports.drop = function (req, res) {
 	mysql.query(sql, [], function (err, result) {
 		
 		if(err) {
-			return util.err(res, "Database error")
+			return util.err(res, err.toString(), err)
 		}
 
 		util.ok(res, "OK", result)
