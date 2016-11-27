@@ -15,6 +15,8 @@ export default class Header extends Component {
         self.showErrorAlertState = "hide"
         self.showLoadingState = "hide"
 
+
+        /* error listeners */
         pubsub.on("error:show", function (error) {
             self.showError(error)
 
@@ -25,7 +27,7 @@ export default class Header extends Component {
             self.hideError()
         })
 
-        /**/
+        /* loading listeners */
         pubsub.on("loading:show", function () {
             self.showLoading()
         })
@@ -33,6 +35,7 @@ export default class Header extends Component {
         pubsub.on("loading:hide", function () {
             self.hideLoading()
         })
+
     }
 
     hideError() {
@@ -55,10 +58,24 @@ export default class Header extends Component {
 
     view() {
         var self = this
+
+        var dbnameClass
+        var tablenameClass
+
+        if(!self.selectedDbname) {
+            dbnameClass = "hide"
+        }
+
+        if(!self.selectedTablename) {
+            tablenameClass = "hide"
+        }
+
         return (
             <div class="w3-margin-top">
                 <ul class="w3-navbar w3-border w3-light-grey">
                     <li><a href="/#/">Server</a></li>
+                    <li class={dbnameClass}><a href="/#/">{self.selectedDbname}</a></li>
+                    <li class={tablenameClass}><a href="/#/">{self.selectedTablename}</a></li>
                     <li class={"w3-right " + self.showLoadingState}><a><i class="fa fa-gear w3-spin"></i></a></li>
                 </ul>
 

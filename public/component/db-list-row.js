@@ -77,7 +77,7 @@ export default class DbListRow extends Component {
 							this.tables().map(function (tablename) {
 								return <div 
 								onclick={self.useTable.bind(self, tablename)}
-								style="padding:3px;"
+								style="padding:3px; font-size:13px;"
 								class={(tablename == self.selectedTablename ? "w3-border" : "")} 
 								> {tablename} 
 								</div>
