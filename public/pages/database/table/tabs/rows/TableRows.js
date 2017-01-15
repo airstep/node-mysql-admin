@@ -17,6 +17,8 @@ class TableRows extends React.Component {
             rows: [],
             page: 0
         }
+
+        this.setPageByInput = this.setPageByInput.bind(this)
     }
 
     componentDidMount() {
@@ -42,17 +44,21 @@ class TableRows extends React.Component {
                     columns: r.data.payload
                 })
 
-                self.listRows()
+                self.listRows(self.state.page)
             })
     }
 
-    listRows() {
+    listRows(page) {
 
         const self = this
         const dbname = self.props.dbname
         const tablename = self.props.tablename
 
-        Http.post("/table/rows", {dbname: dbname, tablename: tablename, page: self.state.page})
+        self.setState({
+            page: page
+        })
+
+        Http.post("/table/rows", {dbname: dbname, tablename: tablename, page: page})
             .then(function (r) {
 
                 if(r.data.code == 400) {
@@ -65,11 +71,18 @@ class TableRows extends React.Component {
             })
     }
 
+    setPageByInput(e) {
+        this.setState({
+            page: e.target.value
+        })
+    }
+
     render() {
 
         const self = this
         const columns = self.state.columns
         const rows = self.state.rows
+        let page = self.state.page
 
         return (
             <div>
@@ -97,6 +110,40 @@ class TableRows extends React.Component {
                     }
                     </tbody>
                 </table>
+
+                {/* pagination */}
+                <ul className="pagination">
+                    <li className="page-item" onClick={() => {self.listRows(--page)}}>
+                        <a className="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span className="sr-only">Next</span>
+                        </a>
+                    </li>
+                    <li className="page-item"><a className="page-link" href="#">{page}</a></li>
+                    <li className="page-item" onClick={() => {self.listRows(++page)}}>
+                        <a className="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span className="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+
+                {/* go to page area */}
+                <div className="input-group" style={{width: 250}}>
+
+                    <input type="text" className="form-control" placeholder="Go to page" onChange={self.setPageByInput}/>
+
+                    <span className="input-group-btn">
+                        <button
+                            className="btn btn-secondary"
+                            type="button"
+                            onClick={() => {self.listRows(page)}}>
+                            Go
+                        </button>
+                    </span>
+
+                </div>
+
             </div>
         )
     }
