@@ -20,7 +20,7 @@ exports.ok = function (res, message, payload) {
 }
 
 exports.err = function (res, message, payload) {
-	send(res, 404, message, payload)
+	send(res, 400, message, payload)
 }
 
 exports.randomString = function (len) {

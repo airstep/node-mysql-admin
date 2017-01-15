@@ -1,6 +1,7 @@
 var util = require("../util")
 var mysql = require("../mysql")
 var _ = require("lodash")
+var LIMIT = 10
 
 exports.list = function (req, res) {
 
@@ -29,8 +30,6 @@ exports.list = function (req, res) {
 	})
 	
 }
-
-
 exports.columnlist = function (req, res) {
 
 	var dbname = req.body.dbname
@@ -58,13 +57,11 @@ exports.columnlist = function (req, res) {
 	})
 	
 }
-
 exports.rows = function (req, res) {
 
 	var dbname = req.body.dbname
 	var tablename = req.body.tablename
-	var limit = req.body.limit
-	var offset = req.body.offset
+	var page = req.body.page
 
 	if(!dbname) {
 		return util.err(res, "Database not selected")
@@ -74,15 +71,15 @@ exports.rows = function (req, res) {
 		return util.err(res, "Table not selected")
 	}
 
-	if(!limit) {
-		limit = 10
+	if(page == null || page == undefined) {
+        page = 0
 	}
 
-	if(offset == null || offset == undefined) {
-		offset = 0
+	if(page < 0) {
+        page = 0
 	}
 
-	var sql = "SELECT * FROM " + dbname +"."+ tablename + " LIMIT " + limit + " OFFSET " + offset
+	var sql = "SELECT * FROM " + dbname +"."+ tablename + " LIMIT " + LIMIT + " OFFSET " + (page * LIMIT)
 	
 
 	mysql.query(sql, [], function (err, result) {
@@ -96,7 +93,6 @@ exports.rows = function (req, res) {
 	})
 	
 }
-
 exports.drop = function (req, res) {
 
 	var sql = "DROP TABLE " + req.body.dbname + "." + req.body.tablename
@@ -111,8 +107,6 @@ exports.drop = function (req, res) {
 	})
 	
 }
-
-
 exports.empty = function (req, res) {
 
 	var sql = "TRUNCATE " + req.body.dbname + "." + req.body.tablename

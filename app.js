@@ -11,8 +11,17 @@ app.get("*", function (req, res) {
 	res.sendFile(__dirname + "/public/index.html")
 })
 
-app.use("/database", require("./routes/database"))
-app.use("/table", require("./routes/table"))
+var dbCtrl = require("./controller/database")
+var tableCtrl = require("./controller/table")
+
+app.post("/database/list", dbCtrl.list)
+app.post("/database/drop", dbCtrl.drop)
+
+app.post("/table/list", tableCtrl.list)
+app.post("/table/column/list", tableCtrl.columnlist)
+app.post("/table/rows", tableCtrl.rows)
+app.post("/table/drop", tableCtrl.drop)
+app.post("/table/empty", tableCtrl.empty)
 
 app.listen(2222)
 
