@@ -13,6 +13,7 @@ app.get("*", function (req, res) {
 
 var dbCtrl = require("./controller/database")
 var tableCtrl = require("./controller/table")
+var columnCtrl = require("./controller/column")
 
 app.post("/database/list", dbCtrl.list)
 app.post("/database/drop", dbCtrl.drop)
@@ -22,6 +23,8 @@ app.post("/table/column/list", tableCtrl.columnlist)
 app.post("/table/rows", tableCtrl.rows)
 app.post("/table/drop", tableCtrl.drop)
 app.post("/table/empty", tableCtrl.empty)
+
+app.post("/column/drop", columnCtrl.drop)
 
 app.listen(2222)
 

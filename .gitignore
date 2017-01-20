@@ -1,3 +1,4 @@
-
 .idea
 node_modules
+public/dist/bundle.js
+public/dist/vendor.js

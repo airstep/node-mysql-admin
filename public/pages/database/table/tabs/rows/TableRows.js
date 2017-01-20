@@ -4,7 +4,7 @@ import {Link} from 'react-router'
 import Row from './component/Row'
 
 /*
- * List structure in this component for a selected tablename
+ * Table rows will be listed with pagination
  */
 
 class TableRows extends React.Component {

@@ -1,5 +1,9 @@
 import React from 'react'
 
+/*
+*  column of each Row
+* */
+
 class Column extends React.Component {
 
     constructor(props) {

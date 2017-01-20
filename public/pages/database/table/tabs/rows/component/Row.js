@@ -1,6 +1,10 @@
 import React from 'react'
 import Column from './Column'
 
+/*
+*  A table row, that contains columns in TableRows component
+* */
+
 class Row extends React.Component {
 
     constructor(props) {

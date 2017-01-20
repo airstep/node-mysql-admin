@@ -2,6 +2,7 @@ import React from 'react'
 import Http from '../../services/Http'
 import Util from '../../services/Util'
 import {Link} from 'react-router'
+import Button from '../../components/Button'
 
 
 /*
@@ -16,6 +17,8 @@ class DatabasePage extends React.Component {
         this.state = {
             tables: []
         }
+
+        this.dropTable = this.dropTable.bind(this)
     }
 
     componentDidMount() {
@@ -45,6 +48,24 @@ class DatabasePage extends React.Component {
             })
     }
 
+    dropTable(table) {
+
+        const self = this
+        const dbname = self.props.params.dbname
+
+        Http.post("/table/drop", {dbname: dbname, tablename: table})
+            .then(function (r) {
+
+                if(r.data.code == 400) {
+                    alert(r.data.message)
+                } else {
+                    alert(r.data.message)
+                    self.listTables(self.props.params.dbname)
+                }
+
+            })
+    }
+
     render() {
 
         const self = this
@@ -70,13 +91,16 @@ class DatabasePage extends React.Component {
                                     <td className="pointer">
                                         <Link to={"/database/" + dbname + "/" + table}>{table}</Link>
                                     </td>
-                                    <td>##</td>
+                                    <td>
+                                        <Button type="danger" small onClick={() => {self.dropTable(table)}}>drop</Button>
+                                    </td>
                                 </tr>
                             )
                         })
                     }
                     </tbody>
                 </table>
+                {tables.length == 0 ? <center>There is no table in <strong>{dbname}</strong></center> : null}
             </div>
         )
     }
